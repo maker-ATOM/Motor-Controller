@@ -1,6 +1,8 @@
 #define ledPin 9
+#define buzzPin 5
 void setup() {
   pinMode(9, OUTPUT);
+  tone(buzzPin, 1000);
 }
 
 void loop() {
