@@ -2,8 +2,7 @@
 
 #include <Wire.h>
 
-int led = 0;
-int buzz = 1000;
+int pod1pow = 0;
 char ack = 6;
 
 void setup() {
@@ -13,13 +12,14 @@ void setup() {
 
 void loop() {
 
+  pod1pow++;
+  pod1();
+  delay(20);
+}
+
+void pod1() {
   Wire.beginTransmission(4);
   Wire.write(ack);
-  Wire.write(led);
-  Wire.write(buzz);
+  Wire.write(pod1pow);
   Wire.endTransmission();
-
-  led = !led;
-  buzz = led * 100 + 100;
-  delay(500);
 }
