@@ -17,6 +17,9 @@ void loop() {
   if (PS4.isConnected()) {
   readValue();
   pod1();
+  pod2();
+  pod3();
+  pod4();
   printData();
   }
   // while(!Serial.available()){
@@ -43,6 +46,39 @@ void pod1() {
   int8_t data_high = (int8_t)(deg >> 8);
   int8_t data_low = (int8_t)deg;
   Wire.beginTransmission(4);
+  Wire.write(ack);
+  Wire.write(data_high);
+  Wire.write(data_low); 
+  Wire.endTransmission();
+}
+
+void pod2() {
+  deg = map(deg, -180, 180, 0, 255);
+  int8_t data_high = (int8_t)(deg >> 8);
+  int8_t data_low = (int8_t)deg;
+  Wire.beginTransmission(5);
+  Wire.write(ack);
+  Wire.write(data_high);
+  Wire.write(data_low); 
+  Wire.endTransmission();
+}
+
+void pod3() {
+  deg = map(deg, -180, 180, 0, 255);
+  int8_t data_high = (int8_t)(deg >> 8);
+  int8_t data_low = (int8_t)deg;
+  Wire.beginTransmission(6);
+  Wire.write(ack);
+  Wire.write(data_high);
+  Wire.write(data_low); 
+  Wire.endTransmission();
+}
+
+void pod4() {
+  deg = map(deg, -180, 180, 0, 255);
+  int8_t data_high = (int8_t)(deg >> 8);
+  int8_t data_low = (int8_t)deg;
+  Wire.beginTransmission(7);
   Wire.write(ack);
   Wire.write(data_high);
   Wire.write(data_low); 
