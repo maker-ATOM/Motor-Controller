@@ -7,19 +7,19 @@
 #define ledPin 9
 
 int led = 0;
-int deg = 0;
+int16_t deg = 0;
 
 // PID definitions
 volatile int posi = 0;
-int High_count = 550;
+int High_count = 250;
 int setpoint, direction;
 float pwm = 0;
 float e;
-float kp = 2;
+float kp = 3.5;
 float diff = 0;
 
 void setup() {
-  Wire.begin(4);
+  Wire.begin(5);
   Wire.onReceive(receiveEvent);
   pinMode(ledPin, OUTPUT);
   pinMode(PWM, OUTPUT);
@@ -36,8 +36,8 @@ void loop() {
 }
 
 void dispData(){
-        if (deg > 0){
-        analogWrite(ledPin, deg);
+        if (deg > 127){
+        digitalWrite(ledPin, HIGH);
       }
       else{
         digitalWrite(ledPin, LOW);
@@ -45,7 +45,7 @@ void dispData(){
 }
 
 void computePID(){
-  setpoint = map(deg, -180, 180, -High_count / 2, High_count / 2);
+  setpoint = map(deg, 0, 255, 0, High_count);
   e = setpoint - posi;
   pwm = kp * e;
   if (pwm > 0){
@@ -72,12 +72,11 @@ void readEncoder() {
 
 void receiveEvent(int16_t byteCount) {
   while (Wire.available() > 0) {
-    if (Wire.read() == 6) {
-      deg = Wire.read();
-      if (deg & 0x80) { 
-        deg = -((~deg + 1) & 0xFF); 
-      }
-      
-    }
+     if (Wire.read() == 6) {
+    uint8_t data_high = Wire.read(); 
+    uint8_t data_low = Wire.read(); 
+    
+    deg = (int16_t)((data_high << 8) | data_low); // combine the high and low bytes into a signed integer
+  }
   }
 }

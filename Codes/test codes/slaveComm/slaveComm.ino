@@ -19,7 +19,7 @@ void loop() {
 }
 
 
-void receiveEvent() {
+void receiveEvent(int16_t byteCount) {
   while (Wire.available() > 0) {
     if (Wire.read() == 6) {
       led = Wire.read();

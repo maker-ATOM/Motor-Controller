@@ -3,14 +3,14 @@
 
 char ack = 6;
 int speed = 0;
-int deg;
+int16_t deg;
 
 float x, y;
 
 void setup() {
   Serial.begin(115200);
   Wire.begin();
-  PS4.begin("f8:9e:94:74:ed:90");
+  PS4.begin("d0:49:7c:9f:da:a2");
 }
 
 void loop() {
@@ -39,10 +39,13 @@ void readValue(){
 }
 
 void pod1() {
+  deg = map(deg, -180, 180, 0, 255);
+  int8_t data_high = (int8_t)(deg >> 8);
+  int8_t data_low = (int8_t)deg;
   Wire.beginTransmission(4);
   Wire.write(ack);
-  Wire.write(deg & 0xFF); 
-  Wire.write((deg >> 8) & 0xFF);
+  Wire.write(data_high);
+  Wire.write(data_low); 
   Wire.endTransmission();
 }
 
