@@ -56,7 +56,7 @@ void pod2() {
   deg = map(deg, -180, 180, 0, 255);
   int8_t data_high = (int8_t)(deg >> 8);
   int8_t data_low = (int8_t)deg;
-  Wire.beginTransmission(5);
+  Wire.beginTransmission(9);
   Wire.write(ack);
   Wire.write(data_high);
   Wire.write(data_low); 
@@ -67,7 +67,7 @@ void pod3() {
   deg = map(deg, -180, 180, 0, 255);
   int8_t data_high = (int8_t)(deg >> 8);
   int8_t data_low = (int8_t)deg;
-  Wire.beginTransmission(6);
+  Wire.beginTransmission(11);
   Wire.write(ack);
   Wire.write(data_high);
   Wire.write(data_low); 

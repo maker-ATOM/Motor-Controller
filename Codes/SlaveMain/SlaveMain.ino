@@ -12,14 +12,14 @@ int16_t deg = 0;
 // PID definitions
 volatile int posi = 0;
 int High_count = 250;
-int setpoint, direction;
+int setpoint=125, direction=0;
 float pwm = 0;
 float e;
-float kp = 3.5;
+float kp = 3.0;
 float diff = 0;
 
 void setup() {
-  Wire.begin(5);
+  Wire.begin(11);
   Wire.onReceive(receiveEvent);
   pinMode(ledPin, OUTPUT);
   pinMode(PWM, OUTPUT);
@@ -28,6 +28,8 @@ void setup() {
   pinMode(DIR, OUTPUT);
 
   attachInterrupt(digitalPinToInterrupt(ENCA), readEncoder, RISING);
+  
+  delay(2000);
 }
 
 void loop() {
